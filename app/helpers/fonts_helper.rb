@@ -1,5 +1,5 @@
 module FontsHelper
-    def draw_text(font = nil, text = "", width = 100, height = 100, fn = 'font.png')
+    def draw_text(font = nil, text = "", size = 12, width = 500, height = 500, fn = 'font.png')
         canvas = Magick::Image.new(width,height) { self.background_color = "Transparent" }
         
         text = text.upcase.strip
@@ -7,7 +7,7 @@ module FontsHelper
         anno = Magick::Draw.new.tap do |a|
             a.gravity = Magick::NorthWestGravity
             a.font = font if font
-            a.pointsize = 15
+            a.pointsize = size.to_f
             a.font_weight = 800
             a.fill = "red"
         end
@@ -50,12 +50,17 @@ module FontsHelper
             fixed_width = width_of_char('A', anno, canvas, -1)
         end
         anno_dup.annotate(canvas_dup, 0, 0, 0, 0, char)
-        canvas_dup.write("#{Rails.root}/rmagick_temp/temp#{index}.png")
+        canvas_dup.write("#{Rails.root}/rmagick_temp/temp.png")
         
         #last_word_pos = i + 1 if char = ' '
         
         metrics = anno_dup.get_type_metrics(canvas_dup, char)
-        
+        begin
+            File.open("#{Rails.root}/rmagick_temp/temp.png") do |f|
+                File.delete(f)
+            end
+        rescue Errno::ENOENT
+        end
         return metrics.width - fixed_width
     end
 end
