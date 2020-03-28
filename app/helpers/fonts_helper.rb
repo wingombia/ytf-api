@@ -1,6 +1,6 @@
 module FontsHelper
     MAX_SIZE = 50
-    def draw_text(font = nil, text = "", size = 12, width = 100, height = 500, fn = 'font.png')
+    def draw_text(font = nil, text = "", size = 12, width = 500, height = 500, fn = 'font.png')
         canvas = Magick::Image.new(width,height) { self.background_color = "Transparent" }
         
         text = text.upcase.strip
