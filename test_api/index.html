@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -9,4 +9,31 @@
     <input type="range" id="size" min="10" max="30">
     <div id="display"></div>
 </body>
+</html>-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <input
+        type="range"
+        id="size"
+        min="10"
+        max="30"
+        onchange="updateSize(this.value);"
+      />
+    </div>
+    <div>
+      <textarea
+        rows="20"
+        cols="100"
+        onkeyup="updateText(this.value);"
+      ></textarea>
+    </div>
+    <img src="" />
+    <script src="script.js"></script>
+  </body>
 </html>

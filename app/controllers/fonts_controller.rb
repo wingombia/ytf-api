@@ -6,8 +6,8 @@ class FontsController < ApplicationController
         end
 
         draw_text(params[:font], params[:text], params[:size])
-        #send_file "#{Rails.root}/font.png", type: "image/png"#, disposition: 'inline'
-        render json: {url: "#{Rails.root}/font.png"}
+        send_file "#{Rails.root}/font.png", type: "image/png"#, disposition: 'inline'
+        #render json: {url: "#{Rails.root}/font#{params[:size]}.png"}
     end
     private 
      def unlock_cors

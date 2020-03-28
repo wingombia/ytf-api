@@ -11,7 +11,7 @@ module FontsHelper
             a.font_weight = 800
             a.fill = "red"
         end
-
+        #fn = "font#{size}.png"
         text = add_new_line(text,anno,canvas)
 
         anno.annotate(canvas, 0, 0, 0, 0, text)
@@ -45,22 +45,22 @@ module FontsHelper
         anno_dup = anno.dup
         canvas_dup = canvas.dup
         fixed_width = 0
-        if index != -1
-            char = char + 'A'
-            fixed_width = width_of_char('A', anno, canvas, -1)
-        end
+        #if index != -1
+        #    char = char + 'A'
+        #    fixed_width = width_of_char('A', anno, canvas, -1)
+        #end
         anno_dup.annotate(canvas_dup, 0, 0, 0, 0, char)
-        canvas_dup.write("#{Rails.root}/rmagick_temp/temp.png")
+        #canvas_dup.write("#{Rails.root}/rmagick_temp/temp.png")
         
         #last_word_pos = i + 1 if char = ' '
         
         metrics = anno_dup.get_type_metrics(canvas_dup, char)
-        begin
-            File.open("#{Rails.root}/rmagick_temp/temp.png") do |f|
-                File.delete(f)
-            end
-        rescue Errno::ENOENT
-        end
+        #begin
+        #    File.open("#{Rails.root}/rmagick_temp/temp.png") do |f|
+        #        File.delete(f)
+        #    end
+        #rescue Errno::ENOENT
+        #end
         return metrics.width - fixed_width
     end
 end
