@@ -36,14 +36,17 @@ module FontsHelper
             end
 
             woc = width_of_char(word, anno)
-            sum_width += woc + space_width
+            sum_width += woc 
+            sum_width += space_width if i < chars.length - 1
+
             word = ''
-            last_word_pos = i if char == ' '
 
             if sum_width >= canvas.columns
                 new_line_pos << last_word_pos
                 sum_width = woc
             end
+
+            last_word_pos = i if char == ' '
         end
         
         new_line_pos.each do |pos|
