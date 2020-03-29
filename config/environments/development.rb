@@ -12,6 +12,8 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
+  #config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+  #config.assets.precompile += %w( .svg .eot .woff .ttf )
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join('tmp', 'caching-dev.txt').exist?

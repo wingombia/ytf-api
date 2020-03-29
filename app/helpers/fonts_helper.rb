@@ -12,7 +12,6 @@ module FontsHelper
             a.font_weight = 800
             a.fill = "red"
         end
-        #fn = "font#{size}.png"
         text = add_new_line(text, anno, canvas, 0)
 
         anno.annotate(canvas, 0, 0, 0, 0, text)
@@ -28,20 +27,22 @@ module FontsHelper
         width_since_last_space = 0
         space_width = width_of_ws(anno)
         padding_right = 10
-
+        word = ''
+    
         chars.each_with_index do |char,i|
-            woc = width_of_char(char, anno)
-            sum_width += woc
-            width_since_last_space += woc
-
-            if char == ' '
-                last_word_pos = i
-                width_since_last_space = space_width
+            if char != ' '
+                word = word + char
+                next if i < chars.length - 1
             end
 
-            if sum_width >= canvas.columns - padding_right 
+            woc = width_of_char(word, anno)
+            sum_width += woc + space_width
+            word = ''
+            last_word_pos = i if char == ' '
+
+            if sum_width >= canvas.columns
                 new_line_pos << last_word_pos
-                sum_width = width_since_last_space
+                sum_width = woc
             end
         end
         
@@ -53,20 +54,14 @@ module FontsHelper
     end
     
     def width_of_char(char, anno, index = 0)
-        if char == ' '
-            return 0
-        end
+        
         anno_dup = anno.dup
-        canvas_dup = Magick::Image.new(MAX_SIZE, 30) { self.background_color = "Transparent" }
-        fixed_width = 0
-        #if index != 1
-        #   char = char + 'A'
-        #    fixed_width = width_of_char('A', anno, 1)
-        #end
+        canvas_dup = Magick::Image.new(MAX_SIZE * char.length, 30) { self.background_color = "Transparent" }
+
         anno_dup.annotate(canvas_dup, 0, 0, 0, 0, char)
         metrics = anno_dup.get_type_metrics(canvas_dup, char)
-        
-        return metrics.width - fixed_width
+    
+        return metrics.width
     end
 
     def width_of_ws(anno)
