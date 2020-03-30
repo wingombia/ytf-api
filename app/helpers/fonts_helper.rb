@@ -28,7 +28,7 @@ module FontsHelper
   def get_annotation(options)
     anno = Magick::Draw.new.tap do |a|
       a.gravity = Magick::NorthWestGravity
-      a.font = options[:font]
+      a.font = get_font_file(options[:font]) || options[:font]
       a.pointsize = options[:size].to_f
       a.font_weight = options[:weight]
       a.fill = options[:color]
@@ -36,6 +36,17 @@ module FontsHelper
     anno
   end
 
+  def get_font_file(font_str)
+    font_folder = Rails.root.join("app","assets","fonts")
+    font_fn = nil
+    
+    Dir.chdir(font_folder) do
+      font_fn = Dir.glob(font_str + ".*",File::FNM_CASEFOLD)[0]
+    end
+    
+    font_fn ? font_folder.join(font_fn).to_s : nil
+  end
+    
   def get_default_value(options)
     options[:font]      ||= "Helvetica"
     options[:size]      ||= 12

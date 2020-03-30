@@ -21,7 +21,7 @@ function arrayBufferToBase64(buffer) {
 }
 
 function updateImage() {
-  let url = `http://localhost:3000/api/get?font=&text=${text}&size=${size}`;
+  let url = `http://localhost:3000/api/get?font=Purisa&text=${text}&size=${size}`;
   fetch(url).then(function(res) {
     if (!res.ok) {
       return;
